@@ -32,7 +32,7 @@ public class ParsePrice
 //
 	Connection connection = Jsoup.connect(url)
 			.ignoreContentType(true)
-			.userAgent("Mozilla/5.0 Chrome/45.0.2454.4 Safari/537.36");
+			.userAgent("Mozilla");
 
 	Document document = connection.get();
 
