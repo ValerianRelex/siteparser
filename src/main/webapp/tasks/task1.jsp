@@ -6,7 +6,7 @@
    <title>Task 1</title>
 </head>
 <body>
-    <a href="../../">Главная страница</a>
+    <a href="<%=request.getContextPath()%>">Главная страница</a>
 
     <h2>Free Phone List:</h2>
         <p>

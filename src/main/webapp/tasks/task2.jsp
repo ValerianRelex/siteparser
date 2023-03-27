@@ -6,7 +6,7 @@
    <title>Task 2</title>
 </head>
 <body>
-    <a href="../index.jsp">Главная страница</a>
+    <a href="<%=request.getContextPath()%>">Главная страница</a>
 
     <h2>Task 2 result:</h2>
         <p>

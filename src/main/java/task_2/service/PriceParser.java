@@ -1,10 +1,4 @@
-package service;
-
-import java.io.IOException;
-import java.net.Authenticator;
-import java.net.InetSocketAddress;
-import java.net.PasswordAuthentication;
-import java.net.Proxy;
+package task_2.service;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -12,14 +6,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ParsePrice
+public class PriceParser
 {
     private static String PROXY_HOST = "142.132.168.249";
     private static int PROXY_PORT = 58823;
     private static String PROXY_USER = "vb7igdwfj4";
     private static String PROXY_PASSWORD = "xl0sb8c6jpg72z3";
 
-    public String startParse() throws IOException, Exception {
+    public String startParse() throws Exception {
 	String url = "http://onlinesim.io/price-list";
 
 //	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST, PROXY_PORT));

@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
@@ -12,10 +13,27 @@
         <servlet-name>Main</servlet-name>
         <servlet-class>MainServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
-        <url-pattern>/api/tasks/*</url-pattern>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Task1</servlet-name>
+        <servlet-class>task_1.AllNumbersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Task1</servlet-name>
+        <url-pattern>/task_1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Task2</servlet-name>
+        <servlet-class>task_2.PriceParserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Task2</servlet-name>
+        <url-pattern>/task_2</url-pattern>
     </servlet-mapping>
 
 </web-app>
