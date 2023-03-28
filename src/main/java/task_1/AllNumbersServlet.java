@@ -13,10 +13,10 @@ import task_1.service.ConnectionService;
 public class AllNumbersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	ConnectionService cs = new ConnectionService();
+	ConnectionService connectionService = new ConnectionService();
 
 	try {
-	    req.setAttribute("countryNumbers", cs.getCountryNumbers());
+	    req.setAttribute("countryNumbers", connectionService.getCountryNumbers());
 	} catch (URISyntaxException e) {
 	    e.printStackTrace();
 	}

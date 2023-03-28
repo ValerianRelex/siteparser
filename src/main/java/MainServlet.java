@@ -18,5 +18,7 @@ public class MainServlet extends HttpServlet {
 	} else if (TASK_2.equals(pathId)) {
 	    res.sendRedirect(req.getContextPath() + "/task_2");
 	}
+
+	// TODO: добавить отсылку на страничку ERROR
     }
 }

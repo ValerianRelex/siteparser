@@ -29,15 +29,14 @@ public class ConnectionService {
     //    private static String PROXY_USER = "vb7igdwfj4";
     //    private static String PROXY_PASSWORD = "xl0sb8c6jpg72z3";
 
-    private CloseableHttpClient httpClient;
-    private HttpGet request;
+    private static CloseableHttpClient httpClient;
 
     public ConnectionService() {
 	init();
     }
 
     // я так думаю, что лучше бы вынести этот метод в отдельный класс
-    private void init() {
+    public static void init() {
 	//        HttpHost proxy = new HttpHost(PROXY_HOST, PROXY_PORT);
 	//
 	//        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
@@ -47,9 +46,6 @@ public class ConnectionService {
 	RequestConfig config = RequestConfig.custom()
 			//                        .setProxy(proxy)
 			.setConnectTimeout(5000).setSocketTimeout(5000).setAuthenticationEnabled(true).build();
-
-	request = new HttpGet();
-	request.setConfig(config);
 
 	HttpClientBuilder builder = HttpClientBuilder.create().setDefaultRequestConfig(config)
 			//                        .setDefaultCredentialsProvider(credentialsProvider)

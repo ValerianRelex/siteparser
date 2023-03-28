@@ -1,5 +1,12 @@
 package task_2.service;
 
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.ProxyAuthenticationStrategy;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,18 +20,30 @@ public class PriceParser
     private static String PROXY_USER = "vb7igdwfj4";
     private static String PROXY_PASSWORD = "xl0sb8c6jpg72z3";
 
-    public String startParse() throws Exception {
-	String url = "http://onlinesim.io/price-list";
+    private static CloseableHttpClient httpClient;
 
-//	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST, PROXY_PORT));
-//
-//	Authenticator.setDefault(new Authenticator() {
-//	    protected PasswordAuthentication getPasswordAuthentication() {
-//		return new PasswordAuthentication(PROXY_USER, PROXY_PASSWORD.toCharArray());
-//	    }
-//	});
-//
-	Connection connection = Jsoup.connect(url)
+    private static String URL_PRICE_LIST = "http://onlinesim.io/price-list";
+
+    public PriceParser() {
+	RequestConfig config = RequestConfig.custom()
+			.setConnectTimeout(5000).setSocketTimeout(5000).setAuthenticationEnabled(true).build();
+
+	HttpClientBuilder builder = HttpClientBuilder.create().setDefaultRequestConfig(config)
+			.setProxyAuthenticationStrategy(new ProxyAuthenticationStrategy());
+
+	httpClient = builder.build();
+    }
+
+    public String startParse() throws Exception {
+	final HttpGet getRequest = new HttpGet(URL_PRICE_LIST);
+
+	CloseableHttpResponse httpResponse = httpClient.execute(getRequest);
+
+	String responseString = EntityUtils.toString(httpResponse.getEntity());
+
+	System.out.println(responseString);
+
+	Connection connection = Jsoup.connect(URL_PRICE_LIST)
 			.ignoreContentType(true)
 			.userAgent("Mozilla");
 
