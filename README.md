@@ -1,4 +1,4 @@
-Задание №1
+**Задание №1**
 
 ЗАДАЧА: собрать все доступные номера в удобную структуру используя два метода: https://onlinesim.ru/api/getFreeCountryList https://onlinesim.ru/api/getFreePhoneList?country=?
 
@@ -8,7 +8,7 @@
 
 Справка по api: https://onlinesim.ru/docs/api/ru/free/_info
 
-Задание №2
+**Задание №2**
 
 ЗАДАЧА: Распарсить прайс лист со страницы http://onlinesim.ru/price-list, ВАЖНО: json-ответ не использовать, именно парсинг html-страницы.
 
