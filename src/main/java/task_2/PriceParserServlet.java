@@ -20,6 +20,8 @@ public class PriceParserServlet extends HttpServlet {
 	    e.printStackTrace();
 	}
 
+	req.setAttribute("price", price);
+
 	getServletContext().getRequestDispatcher("/tasks/task2.jsp").forward(req, res);
 
 	System.out.println("\n\n ==<><><<><><><><><><<>== \n\n" + price);

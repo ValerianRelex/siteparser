@@ -2,14 +2,16 @@ package task_2.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class PriceParser
-{
+public class PriceParser {
     private static String URL_PRICE_LIST = "http://onlinesim.io/price-list";
 
     public PriceParser() {
@@ -30,7 +32,16 @@ public class PriceParser
 
 	    final HtmlPage page = webClient.getPage(URL_PRICE_LIST);
 
+//	    List<DomElement> elementsById = page.getElementsById("price-name");
+//	    DomElement elementByName = page.getElementByName("price-name");
+//	    List<DomElement> elementsByName = page.getElementsByName("price-name");
+//	    // !!!
+//	    List<DomElement> elementsByIdAndOrName = page.getElementsByIdAndOrName("price-name");
+//	    DomNodeList<DomElement> elementsByTagName = page.getElementsByTagName("price-name");
 
+	    final String pageAsXml = page.asXml();
+
+	    return pageAsXml;
 
 	} catch (MalformedURLException e) {
 	    e.printStackTrace();
@@ -39,10 +50,10 @@ public class PriceParser
 	}
 
 	//	Elements elementsByClass1 = document.getElementsByClass("price-name");
-//	Elements elementsByClass2 = document.getElementsByClass("price-text");
-//	Element index = document.getElementById("index");
-//	Element country = document.getElementById("country-1");
-//	Elements elementsByClass = document.getElementsByClass("btn");
+	//	Elements elementsByClass2 = document.getElementsByClass("price-text");
+	//	Element index = document.getElementById("index");
+	//	Element country = document.getElementById("country-1");
+	//	Elements elementsByClass = document.getElementsByClass("btn");
 
 	return String.valueOf("test"); // заглушка
     }

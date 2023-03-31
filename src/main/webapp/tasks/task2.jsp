@@ -10,7 +10,7 @@
 
     <h2>Task 2 result:</h2>
         <p>
-            Its free.......
+            <%=request.getAttribute("price")%>
         </p>
 </body>
 </html>
