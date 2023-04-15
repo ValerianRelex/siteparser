@@ -26,25 +26,15 @@ public class ResponseModel {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public List<Country> getCountryList() {
         return countryList;
     }
 
-    public void setCountryList(List<Country> countryList) {
-        this.countryList = countryList;
-    }
 
     public List<Number> getNumbers() {
         return numbers;
     }
 
-    public void setNumbers(List<Number> numbers) {
-        this.numbers = numbers;
-    }
 
     @Override
     public boolean equals(Object o) {
