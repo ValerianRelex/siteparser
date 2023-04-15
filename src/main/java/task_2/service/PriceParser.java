@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.WebClientOptions;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
@@ -23,44 +21,33 @@ public class PriceParser {
     private final static String XPATH_COUNTRY_BLOCK = "//div[@class='col-md-2 col-xs-6 country-block no-padding'] [@style='overflow-x: scroll;']";
     private final static String XPATH_PRICE_LIST_BLOCK = "//div[@class='service-block']";
     private final static String XPATH_COUNTRY_NAME_BLOCK = "//div[@class='col-md-12 text-center no-padding']";
-    private BrowserVersion browserVersion = BrowserVersion.CHROME;
-    /**
-     * {@link WebClient#waitForBackgroundJavaScript(long)}
-     *
-     * @default 15000
-     */
-    private int javaScriptWaitSecs = 3000;
 
-    /**
-     * Connect to servers that have any SSL certificate
-     *
-     * @see WebClientOptions#setUseInsecureSSL(boolean)
-     */
-    private boolean supportInsecureSSL = true;
+    private final BrowserVersion browserVersion = BrowserVersion.CHROME;
+    private final SilentCssErrorHandler cssErrorHandler = new SilentCssErrorHandler();
+    private final int javaScriptWaitSecs = 3000;
+    private final boolean supportInsecureSSL = true;
+    private final boolean haltOnJSError = false;
 
-    /**
-     * If false will ignore JavaScript errors
-     *
-     * @default false
-     */
-    private boolean haltOnJSError = false;
+    private final WebClient webClient;
 
-    private static final SilentCssErrorHandler cssErrhandler = new SilentCssErrorHandler();
-
-    public Map<String, Map<String, String>> parse() {
+    public PriceParser() {
 	try (final WebClient webClient = new WebClient(browserVersion)) {
-
 	    webClient.getOptions().setJavaScriptEnabled(true);
 	    webClient.getOptions().setThrowExceptionOnScriptError(haltOnJSError);
 	    webClient.getOptions().setUseInsecureSSL(supportInsecureSSL);
 	    webClient.getOptions().setCssEnabled(false);
-	    webClient.setCssErrorHandler(cssErrhandler);
+	    webClient.setCssErrorHandler(cssErrorHandler);
 	    webClient.getOptions().setAppletEnabled(false);
 	    webClient.waitForBackgroundJavaScript(javaScriptWaitSecs);
 	    webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 	    webClient.setJavaScriptErrorListener(new SilentJavaScriptErrorListener());
+	    this.webClient = webClient;
+	}
+    }
 
-	    final HtmlPage startPage = webClient.getPage(URL_FOR_PARSING);
+    public Map<String, Map<String, String>> parse() {
+	try {
+	    HtmlPage startPage = webClient.getPage(URL_FOR_PARSING);
 	    Map<String, Map<String, String>> pricesList = getPricesListForAllCountry(startPage);
 
 	    //===
@@ -68,36 +55,28 @@ public class PriceParser {
 	    //===
 
 	    // вывод значений ключа в консоль
-	    for (Map.Entry<String, Map<String, String>> entry : pricesList.entrySet()) {
-		System.out.println(entry.getKey() + " : " + entry.getValue());
-	    }
+	    //	    for (Map.Entry<String, Map<String, String>> entry : pricesList.entrySet()) {
+	    //		System.out.println(entry.getKey() + " : " + entry.getValue());
+	    //	    }
 	    return pricesList;
-	} catch (Exception e) {
-	    throw new RuntimeException(e);
+	} catch (IOException e) {
+	    throw new RuntimeException(e.getCause());
 	}
     }
 
     private Map<String, Map<String, String>> getPricesListForAllCountry(HtmlPage startPage) {
 	Map<String, Map<String, String>> pricesList = new HashMap<>();
-
-	// запрос - возврат списка стран
 	List<HtmlDivision> allCountryPath = startPage.getByXPath(XPATH_COUNTRY_BLOCK);
-	// получим кнопки стран, для нажатий
-	List<DomNodeList<HtmlElement>> domNodeLists = allCountryPath.stream()
-			.map(elem -> elem.getElementsByTagName("a")).collect(Collectors.toList());
 
-	domNodeLists.forEach(htmlElements -> {
-	    HtmlAnchor htmlElement = (HtmlAnchor) htmlElements.get(0);
+	allCountryPath.forEach(countryPath -> {
+	    HtmlAnchor countryLink = (HtmlAnchor) countryPath.getElementsByTagName("a").get(0);
 	    try {
-		HtmlPage page = htmlElement.click();
-		// Название страны будет ключом в результативной коллекции Map<String, Map<String, String>>
-		String countryName = getCountryName(page);
-		// Получаем значение ключа - которое представляет прайс-лист для конкретного города.
-		Map<String, String> priceList = getPriceList(page);
-		// Заполним коллекцию, которую в последующем преобразуем в JSON и отдадим на вывод
+		HtmlPage countryPage = countryLink.click();
+		// TODO: может стоит использовать класс Optional для обработки ситуаций с NULL !?
+		String countryName = getCountryName(countryPage);
+		Map<String, String> priceList = getPriceList(countryPage);
 		pricesList.put(countryName, priceList);
-
-		page.remove();
+		countryPage.remove();
 	    } catch (IOException e) {
 		e.printStackTrace();
 	    }
