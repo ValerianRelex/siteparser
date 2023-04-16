@@ -14,13 +14,7 @@ import task_2.service.PriceParser;
 public class PriceParserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	Map<String, Map<String, String>> price = Collections.EMPTY_MAP;
-
-	try {
-	    price = new PriceParser().parse();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+	String price = new PriceParser().parse();
 
 	req.setAttribute("price", price);
 

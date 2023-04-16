@@ -1,10 +1,12 @@
 package task_2.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
@@ -15,6 +17,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.javascript.SilentJavaScriptErrorListener;
+import task_2.model.PricesList;
 
 public class PriceParser {
     private final static String URL_FOR_PARSING = "https://onlinesim.io/price-list";
@@ -45,22 +48,17 @@ public class PriceParser {
 	}
     }
 
-    public Map<String, Map<String, String>> parse() {
+    public String parse() {
 	try {
-	    HtmlPage startPage = webClient.getPage(URL_FOR_PARSING);
-	    Map<String, Map<String, String>> pricesList = getPricesListForAllCountry(startPage);
-
-	    //===
-	    // Здесь реализую построение джейсончика. И вторым этапом - возврат джейсончика. И вывод его на страничку
-	    //===
-
-	    // вывод значений ключа в консоль
-	    //	    for (Map.Entry<String, Map<String, String>> entry : pricesList.entrySet()) {
-	    //		System.out.println(entry.getKey() + " : " + entry.getValue());
-	    //	    }
-	    return pricesList;
+	    final HtmlPage startPage = webClient.getPage(URL_FOR_PARSING);
+	    final Map<String, Map<String, String>> pricesList = getPricesListForAllCountry(startPage);
+	    final String valueAsString = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(pricesList);
+	    // TODO: оставить вывод в консольку, пока не реализую вывод с помощью JSP
+	    System.out.println(valueAsString);
+	    return valueAsString;
 	} catch (IOException e) {
-	    throw new RuntimeException(e.getCause());
+	    System.err.println(e.getMessage());
+	    return e.getMessage();
 	}
     }
 
@@ -106,7 +104,6 @@ public class PriceParser {
 
     private String getCountryName(HtmlPage page) {
 	List<HtmlDivision> country = page.getByXPath(XPATH_COUNTRY_NAME_BLOCK);
-
 	return country.stream().map(c -> c.getElementsByTagName("span").get(0).getVisibleText()).findFirst()
 			.orElse(null);
     }
