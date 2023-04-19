@@ -1,4 +1,4 @@
-package task_1.service;
+package task1.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,10 +13,10 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import task_1.model.Country;
-import task_1.model.Number;
-import task_1.model.ResponseModel;
-import task_1.util.HttpUtil;
+import task1.model.Country;
+import task1.model.Number;
+import task1.model.ResponseModel;
+import task1.util.HttpUtil;
 
 public class ConnectionService {
     private static final String URL_FREE_COUNTRY = "https://onlinesim.io/api/getFreeCountryList";

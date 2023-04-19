@@ -1,4 +1,4 @@
-package task_1.util;
+package task1.util;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -12,11 +12,14 @@ import org.apache.http.impl.client.ProxyAuthenticationStrategy;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 
 public class HttpUtil {
-    private static String PROXY_HOST = "142.132.168.249";
-    private static int PROXY_PORT = 58823;
-    private static String PROXY_USER = "vb7igdwfj4";
-    private static String PROXY_PASSWORD = "xl0sb8c6jpg72z3";
-    private static int TIME_OUT = 5000;
+    private static final String PROXY_HOST = "142.132.168.249";
+    private static final int PROXY_PORT = 58823;
+    private static final String PROXY_USER = "vb7igdwfj4";
+    private static final String PROXY_PASSWORD = "xl0sb8c6jpg72z3";
+    private static final int TIME_OUT = 5000;
+
+    private HttpUtil() {
+    }
 
     public static CloseableHttpClient getClient() {
 	RequestConfig config = RequestConfig.custom().setConnectTimeout(TIME_OUT).setSocketTimeout(TIME_OUT)

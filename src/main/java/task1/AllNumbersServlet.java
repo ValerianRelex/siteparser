@@ -1,4 +1,4 @@
-package task_1;
+package task1;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import task_1.service.ConnectionService;
+import task1.service.ConnectionService;
 
 public class AllNumbersServlet extends HttpServlet {
     @Override

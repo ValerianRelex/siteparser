@@ -20,20 +20,20 @@
 
     <servlet>
         <servlet-name>Task1</servlet-name>
-        <servlet-class>task_1.AllNumbersServlet</servlet-class>
+        <servlet-class>task1.AllNumbersServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Task1</servlet-name>
-        <url-pattern>/task_1</url-pattern>
+        <url-pattern>/task1</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Task2</servlet-name>
-        <servlet-class>task_2.PriceParserServlet</servlet-class>
+        <servlet-class>task2.PriceParserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Task2</servlet-name>
-        <url-pattern>/task_2</url-pattern>
+        <url-pattern>/task2</url-pattern>
     </servlet-mapping>
 
 </web-app>

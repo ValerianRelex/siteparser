@@ -14,9 +14,9 @@ public class MainServlet extends HttpServlet {
 	String pathId = path[path.length - 1];
 
 	if (TASK_1.equals(pathId)) {
-	    res.sendRedirect(req.getContextPath() + "/task_1");
+	    res.sendRedirect(req.getContextPath() + "/task1");
 	} else if (TASK_2.equals(pathId)) {
-	    res.sendRedirect(req.getContextPath() + "/task_2");
+	    res.sendRedirect(req.getContextPath() + "/task2");
 	}
 
 	// TODO: добавить отсылку на страничку ERROR
