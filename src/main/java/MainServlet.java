@@ -10,15 +10,18 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-	String[] path = req.getServletPath().split("/");
-	String pathId = path[path.length - 1];
+	String[] servletPath = req.getServletPath().split("/");
+	String pathId = servletPath[servletPath.length - 1];
 
-	if (TASK_1.equals(pathId)) {
+	switch (pathId) {
+	case TASK_1:
 	    res.sendRedirect(req.getContextPath() + "/task1");
-	} else if (TASK_2.equals(pathId)) {
+	    break;
+	case TASK_2:
 	    res.sendRedirect(req.getContextPath() + "/task2");
+	    break;
+	default:
+	    // TODO: добавить отсылку на страничку ERROR
 	}
-
-	// TODO: добавить отсылку на страничку ERROR
     }
 }

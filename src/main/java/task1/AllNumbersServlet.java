@@ -1,7 +1,6 @@
 package task1;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +14,7 @@ public class AllNumbersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	ConnectionService connectionService = new ConnectionService();
 
-	try {
-	    req.setAttribute("countryNumbers", connectionService.getCountryNumbers());
-	} catch (URISyntaxException e) {
-	    e.printStackTrace();
-	}
+	req.setAttribute("countryNumbers", connectionService.getCountryNumbers());
 
 	getServletContext().getRequestDispatcher("/tasks/task1.jsp").forward(req, resp);
     }

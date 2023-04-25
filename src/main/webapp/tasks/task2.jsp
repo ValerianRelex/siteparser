@@ -10,7 +10,9 @@
 
     <h2>Task 2 result:</h2>
         <p>
-            <%=request.getAttribute("price")%>
+            <c:forEach items="${price}" var="string">
+                            ${entry.key}, услуга: ${entry.value}<br>
+            </c:forEach>
         </p>
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,9 +28,17 @@ public class ConnectionService {
 	this.httpClient = HttpUtil.getClient();
     }
 
-    public Map<String, List<Number>> getCountryNumbers() throws URISyntaxException {
+    public Map<String, List<Number>> getCountryNumbers() {
 	Map<String, List<Number>> countryNumbers = new HashMap<>();
-	List<Country> countryList = getCountryListFromUrl(new URI(URL_FREE_COUNTRY));
+	List<Country> countryList = null;
+	try {
+	    countryList = getCountryListFromUrl(new URI(URL_FREE_COUNTRY));
+	} catch (URISyntaxException e) {
+	    e.printStackTrace();
+	}
+	if (Objects.isNull(countryList)) {
+	    return Collections.emptyMap();
+	}
 	countryList.forEach(country -> {
 	    URI uri = URI.create(URL_FREE_PHONE + country.getId());
 	    countryNumbers.put(country.getName(), getNumbersFromUrl(uri));
