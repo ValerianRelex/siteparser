@@ -51,11 +51,9 @@ public class PriceParser {
 	    final HtmlPage startPage = webClient.getPage(URL_FOR_PARSING);
 	    final Map<String, Map<String, Float>> pricesList = getPricesListForAllCountry(startPage);
 	    final ObjectMapper mapper = new ObjectMapper();
-	    final String jsonString = mapper.writeValueAsString(pricesList);
-	    final String jsonStringForConsole = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(pricesList);
-	    // TODO: оставить вывод в консольку, пока не реализую вывод с помощью JSP
-	    System.out.println(jsonStringForConsole);
-	    return jsonString;
+	    final String jsonPriceListPrettyView = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(pricesList);
+	    System.out.println(jsonPriceListPrettyView);
+	    return jsonPriceListPrettyView;
 	} catch (IOException e) {
 	    System.err.println(e.getMessage());
 	    return e.getMessage();
