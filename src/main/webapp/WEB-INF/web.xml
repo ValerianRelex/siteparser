@@ -35,5 +35,8 @@
         <servlet-name>Task2</servlet-name>
         <url-pattern>/task2</url-pattern>
     </servlet-mapping>
-
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
 </web-app>

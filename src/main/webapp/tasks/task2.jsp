@@ -9,7 +9,6 @@
 
     <h2>Task 2 result:</h2>
         <p>
-             <!-- Выводим содержимое JSON строки на печать -->
              <%
                 out.print(request.getAttribute("price"));
              %>
